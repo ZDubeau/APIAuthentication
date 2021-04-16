@@ -20,23 +20,9 @@ public class UserService {
     UserRepository userRepository;
 
     public List<User> getUser() {
-        List<User> userList = new ArrayList<>();
-        //userRepository.findAll().forEach(userList::add);
-        userRepository.findAll();
-        userList.forEach(e->userList.add(e));
-
+        List<User> userList = (List<User>) userRepository.findAll();
         return userList;
-
     }
-
-
-//    public List<User> getUser(Integer id) {
-//        List<User> userList = new ArrayList<>();
-//        userList.add(new User(1, "Zahra", "db@db.com", "123456789"));
-//        userList.add(new User(2, "Axel", "Sl@sl.com", "987654321"));
-//
-//        return userList;
-//    }
 
     public User getUserById(int id) {
         Predicate<User> userById = p -> Objects.equals(p.getId(), id);
@@ -49,7 +35,13 @@ public class UserService {
         return getUser().stream().filter(userId).findFirst().orElse(null);
     }
 
-    public User addUser(User newUser) {
-        return userRepository.save(newUser);
+    public boolean addUser(User newUser) {
+        try {
+            userRepository.save(newUser);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }

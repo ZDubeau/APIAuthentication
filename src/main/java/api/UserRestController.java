@@ -24,7 +24,6 @@ public class UserRestController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int userId) {
-        if()
         try {
             User user = userService.getUserById(userId);
             return new ResponseEntity<User> (user, HttpStatus.OK);
@@ -36,7 +35,7 @@ public class UserRestController {
 //    with @RequestBody we convert http contain to json
     @PostMapping("/user/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public User addUser(@RequestBody User newUser) {
+    public boolean addUser(@RequestBody User newUser) {
         return userService.addUser(newUser);
     }
 }
